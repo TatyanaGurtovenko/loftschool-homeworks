@@ -48,14 +48,13 @@ function prepend(what, where) {
    findAllPSiblings(document.body) // функция должна вернуть массив с элементами div и span т.к. следующим соседом этих элементов является элемент с тегом P
  */
 function findAllPSiblings(where) {
-  let whereArr = where.children;
-    let arr = [];
-    for (let i = 0; i < whereArr.length - 1; i++) {
-        if (whereArr[i].nextElementSibling.nodeName === 'P') {
-            arr.push(whereArr[i]);
-        }
+  let arr = [];
+  for (const node of where.children) {
+    if (node.nextElementSibling && node.nextElementSibling.nodeName === 'P') {
+      arr.push(node);
     }
-    return arr;
+  }
+  return arr;
 }
 /*
  Задание 4:
@@ -78,7 +77,7 @@ function findError(where) {
   const result = [];
 
   for (const child of where.children) {
-      result.push(child.textContent);
+    result.push(child.textContent);
   }
 
   return result;
@@ -97,7 +96,6 @@ function findError(where) {
    должно быть преобразовано в <div></div><p></p>
  */
 function deleteTextNodes(where) {
-
   for (let child of where.childNodes) {
     if (child.nodeType === 3) {
       child.parentNode.removeChild(child);
@@ -117,16 +115,15 @@ function deleteTextNodes(where) {
    должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
 function deleteTextNodesRecursive(where) {
-
   for (let i = 0; i < where.childNodes.length; i++) {
-      let child = where.childNodes[i];
+    let child = where.childNodes[i];
 
-      if (child.nodeType === 3) {
-          where.removeChild(child);
-          i--;
-      } else if (child.nodeType === 1) {
-          deleteTextNodesRecursive(child);
-      }
+    if (child.nodeType === 3) {
+      where.removeChild(child);
+      i--;
+    } else if (child.nodeType === 1) {
+      deleteTextNodesRecursive(child);
+    }
   }
 }
 
